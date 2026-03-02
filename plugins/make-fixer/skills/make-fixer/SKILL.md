@@ -243,6 +243,19 @@ make-fixer resume -s <scenarioId> --errored <moduleId> --from <retryModuleId> [-
 
 The command reads the local blueprint, extracts every output field from the errored module's interface, and produces a complete `builtin:Resume` JSON with the mapper fully populated. `__IMTINDEX__` and `__IMTLENGTH__` are wrapped in backtick syntax automatically.
 
+## Scenario Notes
+
+Notes are **separate from the blueprint** — they're managed via the Make.com API, not stored in the blueprint JSON. Use them to document module purposes, business logic, or implementation details.
+
+```bash
+make-fixer notes -s <scenarioId>                                         # List all notes
+make-fixer notes -s <scenarioId> --add --module 1,2 --content "text"     # Add a note
+```
+
+- `--module` — comma-separated module IDs the note is attached to
+- `--content` — note text (supports HTML: `<br>` for line breaks, `<b>` for bold)
+- Without `--add`, lists all notes with module IDs, content preview, and author
+
 ## Make.com Documentation
 
 To fetch LLM-friendly documentation from Make.com's help center, append `.md` to any help page URL:
