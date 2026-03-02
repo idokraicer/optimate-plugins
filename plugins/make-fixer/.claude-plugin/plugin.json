@@ -1,0 +1,13 @@
+{
+  "name": "make-fixer",
+  "description": "Edit and build Make.com scenario blueprints — fetch, analyze, edit, validate, and push scenarios directly from Claude Code",
+  "version": "1.0.0",
+  "author": {
+    "name": "Ido Kraicer",
+    "email": "ido@optimate.co.il"
+  },
+  "homepage": "https://github.com/idokraicer/optimate-plugins",
+  "repository": "https://github.com/idokraicer/make-fixer",
+  "license": "MIT",
+  "keywords": ["make.com", "automation", "scenarios", "blueprints", "integrations", "no-code"]
+}

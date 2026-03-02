@@ -1,0 +1,27 @@
+{
+  "name": "optimate-plugins",
+  "owner": {
+    "name": "Ido Kraicer",
+    "email": "ido@optimate.co.il"
+  },
+  "metadata": {
+    "description": "Automation and integration plugins for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "make-fixer",
+      "source": "./plugins/make-fixer",
+      "description": "Edit and build Make.com scenario blueprints — fetch, analyze, edit, validate, and push scenarios directly from Claude Code",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ido Kraicer"
+      },
+      "homepage": "https://github.com/idokraicer/optimate-plugins",
+      "repository": "https://github.com/idokraicer/optimate-plugins",
+      "license": "MIT",
+      "keywords": ["make.com", "automation", "scenarios", "blueprints", "integrations", "no-code"],
+      "category": "automation"
+    }
+  ]
+}
