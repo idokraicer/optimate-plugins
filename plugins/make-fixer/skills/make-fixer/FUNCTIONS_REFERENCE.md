@@ -116,7 +116,7 @@ Make automatically converts types when there's a mismatch:
 | `length` | `length(text_or_buffer)` | integer | Character count (text) or byte size (buffer) |
 | `lower` | `lower(text)` | text | Convert to lowercase |
 | `md5` | `md5(text)` | text | MD5 hash |
-| `replace` | `replace(text; searchString; replacement)` | text | Replace occurrences. Supports regex |
+| `replace` | `replace(text; searchString; replacement)` | text | Replace occurrences. Supports regex: `replace(text; "/pattern/g"; emptystring)`. **Note:** To replace with nothing, use the keyword `emptystring` — an empty string `""` does NOT work as replacement |
 | `replaceEmojiCharacters` | `replaceEmojiCharacters(text)` | text | Replace emoji characters |
 | `sha1` | `sha1(text; [encoding]; [key])` | text | SHA-1 hash. Encoding: hex, base64, latin1 |
 | `sha256` | `sha256(text; [encoding]; [key]; [keyEncoding])` | text | SHA-256 hash |
