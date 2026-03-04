@@ -1,6 +1,6 @@
 ---
 name: make-fixer
-description: Fetch, analyze, edit, build, and push Make.com (formerly Integromat) scenario blueprints via the make-fixer CLI. Use when the user mentions Make.com scenarios, blueprints, modules, automation workflows, routers, webhooks, operations cost, or wants to create, debug, optimize, or improve any Make.com automation. Also use when the user asks about Make.com inline functions, expressions, formatDate, parseDate, ifempty, switch, get, map, or any Make.com function syntax — load FUNCTIONS_REFERENCE.md for the complete verified reference. Covers blueprint JSON structure, module mapper formats, variable patterns (Set/Get), error handlers, filters, cost optimization, and community best practices (BEST_PRACTICES.md). This skill and its bundled sub-files are the primary source of truth for all Make.com work.
+description: Fetches, analyzes, edits, builds, and pushes Make.com (formerly Integromat) scenario blueprints via the make-fixer CLI. Use when the user mentions Make.com scenarios, blueprints, modules, automation workflows, routers, webhooks, operations cost, or wants to create, debug, optimize, or improve any Make.com automation. Also use when the user asks about Make.com inline functions, expressions, formatDate, parseDate, ifempty, switch, get, map, or any Make.com function syntax — load FUNCTIONS_REFERENCE.md for the complete verified reference. Covers blueprint JSON structure, module mapper formats, variable patterns (Set/Get), error handlers, filters, cost optimization, and community best practices (BEST_PRACTICES.md). This skill and its bundled sub-files are the primary source of truth for all Make.com work.
 user-invocable: true
 ---
 
@@ -286,125 +286,28 @@ There are 4 variable modules — use them correctly:
 - Use variables when a value is **computed once but referenced many times** across distant modules
 - Use **inline expressions** (`{{1.field}}`) when data flows linearly — direct module references are simpler, cheaper (no extra module), and clearer
 
-### Inline functions reference
+### Inline functions quick reference
 
 <HARD-RULE>
-**NEVER fabricate, guess, or invent inline functions.** Only use functions listed below. If you're unsure whether a function exists, do NOT use it. There is no `dateDifference`, `startOfDay`, `endOfDay`, `toBoolean`, `toNumber`, `log`, `ln`, or `values` function. Using a non-existent function will cause the scenario to fail.
+**NEVER fabricate, guess, or invent inline functions.** If you're unsure whether a function exists, check [FUNCTIONS_REFERENCE.md](FUNCTIONS_REFERENCE.md) — it is the canonical list. If a function is not listed there, it does not exist. There is no `dateDifference`, `startOfDay`, `endOfDay`, `toBoolean`, `toNumber`, `log`, `ln`, or `values` function.
 </HARD-RULE>
 
-**General functions:**
+For the **complete function catalog** (70+ functions with signatures, parameters, return types, date/time tokens, filter operators, data types, and type coercion rules), read [FUNCTIONS_REFERENCE.md](FUNCTIONS_REFERENCE.md).
 
-| Function | Syntax | Returns |
-|---|---|---|
-| `get` | `get(object_or_array; path)` | Value at path (dot notation, 1-based arrays) |
-| `if` | `if(expression; value1; value2)` | value1 if true, else value2 |
-| `ifempty` | `ifempty(value1; value2)` | value1 if not empty, else value2 |
-| `switch` | `switch(expr; val1; res1; [val2; res2; ...]; [else])` | Result matching first value |
-| `omit` | `omit(collection; key1; [key2; ...])` | Collection without specified keys |
-| `pick` | `pick(collection; key1; [key2; ...])` | Collection with only specified keys |
-| `coalesce` | `coalesce(value1; value2; [...])` | First non-null/non-empty value |
+**Most-used functions** (see FUNCTIONS_REFERENCE.md for full list):
 
-**String functions:**
+| Category | Key functions |
+|----------|--------------|
+| **Control flow** | `if`, `ifempty`, `switch`, `coalesce` |
+| **Collections** | `get`, `pick`, `omit`, `keys`, `map`, `toArray`, `toCollection` |
+| **Strings** | `contains`, `replace`, `split`, `join`, `substring`, `trim`, `lower`, `upper`, `length`, `toString`, `indexOf` |
+| **Arrays** | `map`, `join`, `merge`, `flatten`, `sort`, `first`, `last`, `length`, `add`, `remove`, `deduplicate`, `slice` |
+| **Math** | `round`, `ceil`, `floor`, `abs`, `sum`, `max`, `min`, `formatNumber`, `parseNumber` |
+| **Dates** | `formatDate`, `parseDate`, `addDays`, `addHours`, `addMinutes`, `addMonths`, `setDate`, `setDay` |
 
-| Function | Syntax | Returns |
-|---|---|---|
-| `ascii` | `ascii(text; [removeDiacritics])` | ASCII-only string |
-| `base64` | `base64(text)` | Base64-encoded string |
-| `capitalize` | `capitalize(text)` | First char uppercased |
-| `contains` | `contains(text; searchString)` | Boolean |
-| `decodeURL` | `decodeURL(text)` | URL-decoded string |
-| `encodeURL` | `encodeURL(text)` | URL-encoded string |
-| `escapeHTML` | `escapeHTML(text)` | HTML-escaped string |
-| `indexOf` | `indexOf(text; searchString; [start])` | Position (number) |
-| `join` | `join(array; separator)` | Joined string |
-| `length` | `length(text_or_buffer)` | Character count or buffer bytes |
-| `lower` | `lower(text)` | Lowercase string |
-| `md5` | `md5(text)` | MD5 hex hash |
-| `replace` | `replace(text; search; replacement)` | Modified string (supports regex) |
-| `replaceEmojiCharacters` | `replaceEmojiCharacters(text; replacement)` | Emoji-free string |
-| `sha1` | `sha1(text; [encoding]; [key])` | SHA-1 hash |
-| `sha256` | `sha256(text; [encoding]; [key]; [keyEncoding])` | SHA-256 hash |
-| `sha512` | `sha512(text; [encoding]; [key]; [keyEncoding])` | SHA-512 hash |
-| `split` | `split(text; separator)` | Array of strings |
-| `startcase` | `startcase(text)` | Title Case String |
-| `stripHTML` | `stripHTML(text)` | Plain text (HTML removed) |
-| `substring` | `substring(text; start; [length])` | Substring |
-| `toBinary` | `toBinary(value; [encoding])` | Binary data |
-| `toString` | `toString(value)` | String representation |
-| `trim` | `trim(text)` | Whitespace-trimmed string |
-| `upper` | `upper(text)` | UPPERCASE string |
+**Variables (no parentheses):** `now`, `timestamp`, `random`, `pi`
 
-**Math functions:**
-
-| Function | Syntax | Returns |
-|---|---|---|
-| `abs` | `abs(number)` | Absolute value |
-| `average` | `average(value1; ...) or average(array)` | Mean |
-| `ceil` | `ceil(number)` | Rounded up integer |
-| `floor` | `floor(number)` | Rounded down integer |
-| `formatNumber` | `formatNumber(number; decimalPoints; [decSep]; [thousSep])` | Formatted string |
-| `max` | `max(value1; ...) or max(array)` | Maximum value |
-| `median` | `median(array)` | Median value |
-| `min` | `min(value1; ...) or min(array)` | Minimum value |
-| `mod` | `mod(dividend; divisor)` | Remainder |
-| `parseNumber` | `parseNumber(text; [decimalSeparator])` | Number |
-| `pow` | `pow(base; exponent)` | Power result |
-| `round` | `round(number; [decimalPlaces])` | Rounded number |
-| `sqrt` | `sqrt(number)` | Square root |
-| `sum` | `sum(value1; ...) or sum(array)` | Total |
-| `trunc` | `trunc(number; [decimalPlaces])` | Truncated number |
-
-**Math variables (no parentheses):** `random` (float 0–1), `pi` (3.14159...)
-
-**Date/time functions:**
-
-| Function | Syntax | Returns |
-|---|---|---|
-| `formatDate` | `formatDate(date; format; [timezone])` | Formatted date string |
-| `parseDate` | `parseDate(text; format; [timezone])` | Date object |
-| `addDays` | `addDays(date; number)` | Date (negative subtracts) |
-| `addHours` | `addHours(date; number)` | Date |
-| `addMinutes` | `addMinutes(date; number)` | Date |
-| `addMonths` | `addMonths(date; number)` | Date |
-| `addSeconds` | `addSeconds(date; number)` | Date |
-| `addYears` | `addYears(date; number)` | Date |
-| `setDate` | `setDate(date; number)` | Date (day of month 1–31) |
-| `setDay` | `setDay(date; number_or_name)` | Date (day of week, 0=Sun) |
-| `setHour` | `setHour(date; number)` | Date (0–23) |
-| `setMinute` | `setMinute(date; number)` | Date (0–59) |
-| `setMonth` | `setMonth(date; number_or_name)` | Date (1–12) |
-| `setSecond` | `setSecond(date; number)` | Date (0–59) |
-| `setYear` | `setYear(date; number)` | Date |
-
-**Date/time variables (no parentheses):** `now` (current datetime), `timestamp` (Unix seconds)
-
-**Common format tokens for `formatDate`/`parseDate`:** `YYYY` (year), `MM` (month 01–12), `DD` (day 01–31), `HH` (24h hours), `hh` (12h hours), `mm` (minutes), `ss` (seconds), `X` (Unix timestamp), `ddd`/`dddd` (weekday short/full)
-
-**Array functions:**
-
-| Function | Syntax | Returns |
-|---|---|---|
-| `add` | `add(array; value1; [...])` | Array with added values |
-| `contains` | `contains(array; value)` | Boolean |
-| `deduplicate` | `deduplicate(array)` | Unique primitives |
-| `distinct` | `distinct(array; [key])` | Unique by key (for objects) |
-| `first` | `first(array)` | First element |
-| `flatten` | `flatten(array; [depth])` | Flattened array |
-| `join` | `join(array; separator)` | String |
-| `keys` | `keys(object)` | Array of key names |
-| `last` | `last(array)` | Last element |
-| `length` | `length(array)` | Count |
-| `map` | `map(array; key; [filterKey]; [filterValues])` | Extracted values |
-| `merge` | `merge(array1; array2; [...])` | Merged array |
-| `remove` | `remove(array; value1; [...])` | Array without values |
-| `reverse` | `reverse(array)` | Reversed array |
-| `shuffle` | `shuffle(array)` | Randomized array |
-| `slice` | `slice(array; start; [end])` | Sub-array (1-based) |
-| `sort` | `sort(array; [order]; [key])` | Sorted (asc/desc/asc ci/desc ci) |
-| `toArray` | `toArray(collection)` | Array of {key, value} pairs |
-| `toCollection` | `toCollection(array; keyProp; valueProp)` | Collection object |
-
-**Special values:** `true`, `false`, `null`, `emptystring` (forces empty string vs null)
+**Special values:** `true`, `false`, `null`, `emptystring` (forces truly empty output — not `""`, not `null`)
 
 ## Rules
 
@@ -414,6 +317,72 @@ There are 4 variable modules — use them correctly:
 4. **Preserve the `idSequence` field** if present — it is server-managed.
 5. **Error handlers need their own unique IDs** — they are separate modules in the `onerror` array.
 6. **Position modules visually** using `metadata.designer.x` and `metadata.designer.y`. Increment `x` by ~300 for each subsequent module.
+
+## Native-First Problem Solving
+
+<HARD-RULE>
+**Exhaust every native Make.com capability before suggesting a Code module.** A Code module is a last resort, not a default answer. When something seems "impossible" natively, that is a signal to think more creatively — not to reach for code.
+</HARD-RULE>
+
+Almost any data transformation, conditional logic, or output shaping can be achieved natively using a combination of inline functions, raw string bodies, and expression composition. The techniques below are your toolkit. Work through all of them before concluding that native is insufficient.
+
+### Native Techniques Checklist
+
+Before proposing a Code module, confirm you have considered **every** technique below:
+
+| Technique | What it unlocks |
+|-----------|----------------|
+| **Raw string body** | HTTP module body set to `Raw` accepts full `{{...}}` expressions, string concatenation (`+`), and conditionals. Unlocks patterns that structured/mapped field mode cannot express. |
+| **String concatenation (`+`)** | Build values character by character — inject quotes, colons, commas, brackets, and entire JSON structures manually. `"\"key\": \"" + {{1.value}} + "\""` |
+| **`emptystring`** | Produces truly zero output — not `""`, not `null`, not whitespace. Use it to make entire lines, keys, or segments disappear. |
+| **`if` + `emptystring`** | Conditionally include or entirely exclude any piece of output: JSON keys, URL parameters, headers, body segments, array elements. The core pattern for conditional structures. |
+| **`ifempty` + `coalesce`** | Fallback chains across multiple possible source fields. `coalesce(1.mobile; 1.phone; 1.altPhone; "no-phone")` |
+| **Nested function composition** | Functions nest to arbitrary depth. A single expression can parse, transform, format, and conditionally output a value. `{{if(length(trim(1.name)) > 0; upper(substring(trim(1.name); 0; 1)) + lower(substring(trim(1.name); 1)); emptystring)}}` |
+| **`switch`** | Replaces multi-branch if/else logic natively. Cleaner than nested `if` for 3+ conditions. |
+| **`omit` / `pick`** | Shape collections without touching individual keys. Pass through an entire object minus sensitive fields, or extract only the fields you need. |
+| **`map` + `join`** | Dynamically build comma-separated lists, query strings, or structured text from arrays. `{{join(map(1.items; "name"); ", ")}}` |
+| **`toArray` + `join`** | Serialize entire collections into structured strings. Convert key-value pairs into URL params, header strings, or custom formats. |
+| **`replace` with regex** | Pattern-based transformations on strings — extract, reformat, strip, or restructure text without code. |
+
+### Worked Example: Conditional JSON Keys
+
+**Problem:** Build an HTTP request body where some JSON keys should only appear if their value exists. Structured mode always sends every mapped field (as `null` or `""`), but the API rejects unknown or empty keys.
+
+**Naive reaction:** "This requires a Code module to build the JSON dynamically."
+
+**Native solution:** Use Raw body mode with `if` + `emptystring` + string concatenation.
+
+```
+{
+  "name": "{{1.name}}",
+  "email": "{{1.email}}"{{if(length(ifempty(1.phone; emptystring)) > 0; ",\n  \"phone\": \"" + 1.phone + "\""; emptystring)}}{{if(length(ifempty(1.company; emptystring)) > 0; ",\n  \"company\": \"" + 1.company + "\""; emptystring)}}
+}
+```
+
+**How it works:**
+1. `name` and `email` are always present (required fields)
+2. For each optional field: `if` checks whether the value has content
+3. If yes → emits `,"phone": "value"` (including the leading comma)
+4. If no → emits `emptystring` (truly nothing — no comma, no key, no trace)
+5. The result is valid JSON with only the keys that have values
+
+**The pattern:** `{{if(length(ifempty(FIELD; emptystring)) > 0; ",\"KEY\": \"" + FIELD + "\""; emptystring)}}`
+
+This same pattern extends to:
+- **Conditional URL parameters:** `{{if(1.page; "&page=" + 1.page; emptystring)}}`
+- **Conditional headers:** include or exclude entire header lines
+- **Conditional array elements:** build arrays with only populated values
+- **Conditional XML nodes:** same `if` + `emptystring` pattern works for any text format
+
+### When a Code Module IS Justified
+
+Only suggest a Code module when **all three conditions are checked** and at least one applies:
+
+1. **Untrusted data** — The values being inserted could contain characters that break string-built structures (unescaped quotes, backslashes, newlines, unicode). Raw string concatenation with user-generated content risks producing malformed JSON/XML. A Code module with proper `JSON.stringify()` is safer.
+2. **Looping/recursion** — The logic requires iterating in ways Make.com's Iterator + Aggregator pattern cannot handle (e.g., recursive tree traversal, variable-depth nesting, complex accumulation across iterations).
+3. **Unmaintainable complexity** — The expression would exceed ~200 characters or nest more than 4 levels deep, making it unreadable and un-debuggable. At that point, a Code module with comments is more maintainable.
+
+If none of these apply, the answer is native. Go back to the techniques checklist.
 
 ## Common Operations
 
@@ -449,9 +418,12 @@ Inside `{{...}}`, use single quotes to avoid JSON escaping issues:
 - When proposing approaches, always include the operation cost comparison (e.g. "Approach A: 5 modules per run, Approach B: 3 modules per run").
 - Actively question every module: is this strictly necessary? Can it be combined with another step?
 
-## $ARGUMENTS
+## Handling Arguments
 
-- **Scenario ID or URL provided**: Start Phase 1 (fetch and gather context) immediately, then proceed to brainstorming/clarifying questions.
-- **Description of what to build**: Start Phase 2 (brainstorm & clarify) immediately — ask questions to understand the full picture before proposing a design.
-- **Both ID and description**: Fetch first, then use the description to inform your clarifying questions — but still go through all phases.
-- In all cases, go through the workflow phases. Never skip to editing.
+When invoked with arguments (`$ARGUMENTS`), determine the starting point:
+
+**URL or numeric ID?** → Phase 1: `make-fixer fetch -s $ARGUMENTS` then analyze and summarize.
+**Description of what to build?** → Phase 2: Begin brainstorming questions immediately.
+**Both ID and description?** → Fetch first, then use the description to inform your clarifying questions.
+
+In all cases, go through the workflow phases. Never skip to editing.
