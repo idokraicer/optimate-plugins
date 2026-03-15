@@ -22,6 +22,34 @@
       "license": "MIT",
       "keywords": ["make.com", "automation", "scenarios", "blueprints", "integrations", "no-code"],
       "category": "automation"
+    },
+    {
+      "name": "fireberry",
+      "source": "./plugins/fireberry",
+      "description": "Integration guide for fireberry-api-client — a TypeScript client for the Fireberry CRM API with QueryBuilder, batch ops, metadata, and schema generation",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ido Kraicer"
+      },
+      "homepage": "https://github.com/idokraicer/optimate-plugins",
+      "repository": "https://github.com/idokraicer/fireberry-api-client",
+      "license": "MIT",
+      "keywords": ["fireberry", "crm", "api-client", "typescript", "query-builder"],
+      "category": "integration"
+    },
+    {
+      "name": "fireberry-app-builder",
+      "source": "./plugins/fireberry-app-builder",
+      "description": "Build and deploy custom Fireberry CRM apps with CLI, SDK, Design System, and component types (record, side-menu, global-menu)",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ido Kraicer"
+      },
+      "homepage": "https://github.com/idokraicer/optimate-plugins",
+      "repository": "https://github.com/idokraicer/optimate-plugins",
+      "license": "MIT",
+      "keywords": ["fireberry", "crm", "sdk", "components", "plugins", "design-system"],
+      "category": "integration"
     }
   ]
 }

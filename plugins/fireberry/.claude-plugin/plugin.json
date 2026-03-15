@@ -1,0 +1,13 @@
+{
+  "name": "fireberry",
+  "description": "Integration guide for fireberry-api-client — a TypeScript client for the Fireberry CRM API with QueryBuilder, batch ops, metadata, and schema generation",
+  "version": "1.0.0",
+  "author": {
+    "name": "Ido Kraicer",
+    "email": "ido@optimate.co.il"
+  },
+  "homepage": "https://github.com/idokraicer/optimate-plugins",
+  "repository": "https://github.com/idokraicer/fireberry-api-client",
+  "license": "MIT",
+  "keywords": ["fireberry", "crm", "api-client", "typescript", "query-builder"]
+}
