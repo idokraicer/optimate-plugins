@@ -177,7 +177,7 @@ client.destroy();
 
 ## Using fireberry-api-client with SDK (Recommended)
 
-Wraps the SDK with QueryBuilder, caching, batch operations, and more. See the `fireberry` skill for full API client reference.
+Wraps the SDK with QueryBuilder, caching, batch operations, and more. **REQUIRED SUB-SKILL:** Use `fireberry` for full API client reference (CRUD, QueryBuilder, batch ops, metadata, schema/ERD generation, error handling).
 
 ```typescript
 import FireberryClientSDK from "@fireberry/sdk/client";
