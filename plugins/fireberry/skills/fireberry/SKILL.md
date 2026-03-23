@@ -1,7 +1,6 @@
 ---
 name: fireberry
-description: Complete integration guide for fireberry-api-client - A TypeScript client for Fireberry CRM API with patterns, best practices, and code examples
-allowed-tools: Read, Write, Edit, Bash
+description: Use when integrating with Fireberry CRM API - querying records, CRUD operations, batch processing, metadata introspection, field creation, schema generation, or building apps with fireberry-api-client
 ---
 
 # Fireberry API Client Integration Skill
@@ -225,6 +224,102 @@ try {
 | 6 | Event | eventid | subject |
 | 7 | Note | noteid | subject |
 | 14 | Product | productid | productname |
+
+## Field Types
+
+### System Field Type IDs
+
+Each field has a `systemFieldTypeId` (UUID). Use `FIELD_TYPE_IDS` constants for comparison and `FIELD_TYPE_MAPPINGS` for display names. The metadata API auto-maps these to `field.fieldType`.
+
+| `FIELD_TYPE_IDS.*` | Display Name | Notes |
+|--------------------|-------------|-------|
+| `TEXT` | Text | maxLength 1-200 |
+| `LONG_TEXT` | Long Text | Textarea |
+| `NUMERIC` | Number | precision 0-4 |
+| `DROPDOWN` | Dropdown | Has picklist values |
+| `LOOKUP` | Lookup | relatedObjectType populated with `includeLookupRelations: true` |
+| `EMAIL` | Email | |
+| `URL` | URL | |
+| `TELEPHONE` | Telephone | |
+| `DATE` | Date | |
+| `DATETIME` | DateTime | |
+| `HTML` | HTML | Rich text |
+
+```typescript
+import { FIELD_TYPE_IDS, FIELD_TYPE_MAPPINGS } from 'fireberry-api-client';
+
+// Check field type
+if (field.systemFieldTypeId === FIELD_TYPE_IDS.LOOKUP) { /* lookup logic */ }
+
+// Get display name from UUID
+const typeName = FIELD_TYPE_MAPPINGS[field.systemFieldTypeId]; // "Dropdown"
+
+// metadata.getFields() auto-maps fieldType for you
+const { fields } = await client.metadata.getFields('1');
+fields.forEach(f => console.log(f.fieldName, f.fieldType)); // "statuscode", "Dropdown"
+```
+
+### Field Metadata Properties
+
+`client.metadata.getFields()` returns `FireberryField` objects with: `fieldName`, `label`, `systemFieldTypeId`, `fieldType` (auto-mapped display name), `required?`, `defaultValue?`, `maxLength?` (text), `precision?` (number), `relatedObjectType?` (lookup, when `includeLookupRelations: true`).
+
+### Creating Custom Fields
+
+Use `client.fields.create(objectType, options)`. Field names must start with `pcf_`.
+
+**All types require:** `type`, `fieldName` (must start with `pcf_`), `label`
+**Optional for all:** `defaultValue?`, `follow?` (track changes), `autoComplete?` (text/email/url/phone/number only)
+
+| Type | Extra Options |
+|------|--------------|
+| `text`, `email`, `url` | `maxLength?: number` (1-200) |
+| `number` | `precision?: number` (0-4 decimal places) |
+| `picklist` | `values: { name: string, value: string }[]` |
+| `lookup` | `relatedObjectId: string` |
+| `formula` | `formula: string`, `formulaFieldType: 'text'\|'number'\|'date'\|'boolean'`, `formulaPrecision?: number` |
+| `summary` | `summaryType: 'avg'\|'count'\|'max'\|'min'\|'sum'`, `relatedObjectId: string`, `summaryField?: string` |
+| `textarea`, `phone`, `date`, `datetime`, `html` | No extra options |
+
+```typescript
+// Picklist with values
+await client.fields.create('1', {
+  type: 'picklist',
+  fieldName: 'pcf_priority',
+  label: 'Priority',
+  values: [
+    { name: 'Low', value: '1' },
+    { name: 'Medium', value: '2' },
+    { name: 'High', value: '3' },
+  ],
+});
+
+// Lookup (relation to another object)
+await client.fields.create('2', {
+  type: 'lookup',
+  fieldName: 'pcf_related_account',
+  label: 'Related Account',
+  relatedObjectId: '1', // Points to Account
+});
+
+// Formula
+await client.fields.create('1', {
+  type: 'formula',
+  fieldName: 'pcf_full_address',
+  label: 'Full Address',
+  formula: 'CONCAT(city, ", ", country)',
+  formulaFieldType: 'text',
+});
+
+// Summary (rollup)
+await client.fields.create('1', {
+  type: 'summary',
+  fieldName: 'pcf_total_value',
+  label: 'Total Order Value',
+  summaryType: 'sum',
+  relatedObjectId: '13',
+  summaryField: 'totalamount', // Required for sum/avg/min/max
+});
+```
 
 ## Field Mapping Utilities
 

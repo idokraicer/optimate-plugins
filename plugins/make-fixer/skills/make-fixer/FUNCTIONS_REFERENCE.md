@@ -96,6 +96,7 @@ Make automatically converts types when there's a mismatch:
 | Variable | Description |
 |----------|-------------|
 | `random` | Pseudo-random float in `[0, 1)`. For integer range: `{{floor(random * (max - min + 1)) + min}}` |
+| `pi` | The constant π (3.14159...) |
 
 ---
 
@@ -160,6 +161,15 @@ Make automatically converts types when there's a mismatch:
 |----------|-------------|
 | `now` | Current date and time (no parentheses) |
 | `timestamp` | Current Unix timestamp in seconds (no parentheses) |
+
+### Global Variables
+
+These variables are available anywhere in expressions (no parentheses):
+
+| Variable | Description |
+|----------|-------------|
+| `newline` | Literal line break character. Use in `replace()` to swap line breaks: `replace(text; newline; "<br />")` |
+| `emptystring` | Truly empty output — not `""`, not `null`. Use to make values disappear entirely. |
 
 ### Useful Date Formulas
 
@@ -362,6 +372,8 @@ Filters are placed between modules to control data flow. Each condition has: ope
 | Does not end with | `text:notEndsWith` | No suffix match |
 | Matches pattern (regex) | `text:matches` | Regular expression match |
 | Does not match pattern | `text:notMatches` | No regex match |
+
+**Case-insensitive variants:** Append `:ci` to any text operator for case-insensitive matching. Examples: `text:equal:ci`, `text:contain:ci`, `text:startsWith:ci`, `text:notContain:ci`. Works with all text operators above.
 
 ### Numeric Operators
 | Operator | Code | Description |

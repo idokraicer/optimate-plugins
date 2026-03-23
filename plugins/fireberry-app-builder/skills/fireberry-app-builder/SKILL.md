@@ -15,7 +15,7 @@ Apps are **client-side only** (React + Vite), hosted on Fireberry servers, rende
 
 | Command | Purpose |
 |---------|---------|
-| `npm i -g @fireberry/cli` | Install CLI |
+| `bun add -g @fireberry/cli` | Install CLI |
 | `fireberry init [token]` | Authenticate |
 | `fireberry create <name>` | Scaffold app |
 | `fireberry create-component [name] [type]` | Add component |
@@ -272,7 +272,7 @@ const { theme, isRtl, palette } = useDSThemeContext();
 
 ```bash
 # Terminal 1: Dev server
-cd my-component && npm run dev
+cd my-component && bun run dev
 
 # Terminal 2: Connect to Fireberry
 fireberry debug <component-id-from-manifest> localhost:5173
@@ -281,7 +281,7 @@ fireberry debug <component-id-from-manifest> localhost:5173
 Changes appear instantly via HMR. Stop debug mode before deploying:
 ```bash
 fireberry debug <component-id> --stop
-npm run build
+bun run build
 fireberry push
 ```
 
@@ -289,8 +289,8 @@ fireberry push
 
 ```bash
 # Build all components
-cd component-1 && npm run build && cd ..
-cd component-2 && npm run build && cd ..
+cd component-1 && bun run build && cd ..
+cd component-2 && bun run build && cd ..
 
 # Deploy and install
 fireberry push      # Upload to Fireberry servers
@@ -364,7 +364,7 @@ await sdk.app.settings.set({
 | Using `settings.set()` without spreading existing | Always read first, spread existing values |
 | Accessing `record.id` in side-menu/global-menu | Record context only exists in `record` type components |
 | Forgetting `client.destroy()` on unmount | Add cleanup in useEffect return or component unmount |
-| Not building before `fireberry push` | Run `npm run build` in each component directory first |
+| Not building before `fireberry push` | Run `bun run build` in each component directory first |
 | Debug mode still active when pushing | Run `fireberry debug <id> --stop` before deploying |
 | SDK timeout (60s default) not handled | Wrap in try/catch, check `result.success` |
 | Using raw SDK for complex queries | Use `fireberry-api-client` wrapper - handles pagination, caching, retries |
