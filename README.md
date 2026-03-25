@@ -58,6 +58,22 @@ Build and deploy custom Fireberry CRM apps with the platform SDK, CLI, and Desig
 - Local debugging with HMR
 - Deployment workflow
 
+### project-management
+
+Decompose project characterization documents into structured monday.com tasks for Optimate project management.
+
+```
+/plugin install project-management@optimate-plugins
+```
+
+**Features:**
+- Create tasks from characterization docs with iterative brainstorming
+- Update/manage existing tasks and query board status
+- Hebrew output with checklists, edge cases, and UX suggestions
+- System-specific knowledge files (Fireberry, Make.com, Monday.com)
+
+**Prerequisites:** monday.com API token
+
 ## Contributing
 
 To add a plugin to this marketplace, create a directory under `plugins/` following the [Claude Code plugin structure](https://code.claude.com/docs/en/plugins).

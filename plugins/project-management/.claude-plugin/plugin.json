@@ -1,0 +1,13 @@
+{
+  "name": "project-management",
+  "description": "Decompose project characterization documents into structured monday.com tasks, subitems, and updates for Optimate project management",
+  "version": "1.0.0",
+  "author": {
+    "name": "Ido Kraicer",
+    "email": "ido@optimate.co.il"
+  },
+  "homepage": "https://github.com/idokraicer/optimate-plugins",
+  "repository": "https://github.com/idokraicer/optimate-plugins",
+  "license": "MIT",
+  "keywords": ["monday.com", "project-management", "tasks", "optimate", "hebrew"]
+}
