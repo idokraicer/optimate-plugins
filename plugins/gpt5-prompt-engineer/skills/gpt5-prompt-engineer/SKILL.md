@@ -13,7 +13,7 @@ Construct and improve GPT-5.2/5.4 agent prompts using the CTCO framework and GPT
 
 **Improve:** User points to an existing `.md` prompt file and describes issues. Read the file, apply best practices respecting existing structure, edit in place.
 
-Both modes end with a self-review and a Rationale section appended to the file.
+Both modes end with a self-review and a Rationale written to a separate companion file.
 
 ## CTCO Template (new prompts)
 
@@ -91,7 +91,7 @@ Present findings as a short list. Apply fixes. If no issues found, state that an
 3. Generate prompt using CTCO template + best practices
 4. Write the `.md` file
 5. Run anti-patterns checklist, apply fixes
-6. Append `## Rationale` section to the file
+6. Write rationale to a companion file (see Rationale Section below)
 
 ### Improve Mode
 1. User points to `.md` file and describes issue or improvement
@@ -99,14 +99,17 @@ Present findings as a short list. Apply fixes. If no issues found, state that an
 3. Run anti-patterns checklist — flag existing issues alongside requested changes
 4. Apply improvements using best practices, respect existing structure
 5. Edit file in place
-6. Append/update `## Rationale` section
+6. Write/update rationale in the companion file
 
 ### Rationale Section
 
-Always append this at the bottom of the prompt file. It explains decisions for the user's reference — it is NOT part of the prompt sent to GPT-5.
+**Write rationale to a SEPARATE companion file, never inside the prompt file.** If the prompt is `agent-prompt.md`, write the rationale to `agent-prompt.rationale.md`. This prevents GPT-5 from processing meta-commentary about itself (e.g., "removed persona fluff — GPT-5 treats this as noise") which can confuse or distract the agent.
 
+The prompt file must be clean and ready to use as-is — copy it directly into a system prompt with zero editing.
+
+Example companion file (`agent-prompt.rationale.md`):
 ```markdown
-## Rationale
+# Rationale for agent-prompt.md
 - Removed persona fluff ("expert AI assistant") — GPT-5 treats this as noise
 - Added 3-bullet limit to output — prevents verbose responses
 - Added scope constraint — agent was generating unrequested suggestions
