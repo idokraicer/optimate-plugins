@@ -74,6 +74,21 @@ Decompose project characterization documents into structured monday.com tasks fo
 
 **Prerequisites:** monday.com API token
 
+### gpt5-prompt-engineer
+
+Construct and improve GPT-5.2/5.4 agent prompts using the CTCO framework and GPT-5-specific best practices.
+
+```
+/plugin install gpt5-prompt-engineer@optimate-plugins
+```
+
+**Features:**
+- Create new prompts with CTCO structure (Context/Task/Constraints/Output)
+- Improve existing prompts with GPT-5 best practices
+- 10-point anti-patterns checklist self-review
+- Rationale section documenting design decisions
+- Supports both create-from-scratch and improve-existing modes
+
 ## Contributing
 
 To add a plugin to this marketplace, create a directory under `plugins/` following the [Claude Code plugin structure](https://code.claude.com/docs/en/plugins).
