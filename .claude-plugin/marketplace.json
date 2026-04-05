@@ -64,6 +64,20 @@
       "license": "MIT",
       "keywords": ["monday.com", "project-management", "tasks", "optimate", "hebrew"],
       "category": "project-management"
+    },
+    {
+      "name": "gpt5-prompt-engineer",
+      "source": "./plugins/gpt5-prompt-engineer",
+      "description": "Construct and improve GPT-5.2/5.4 agent prompts using the CTCO framework and GPT-5-specific best practices",
+      "version": "1.0.0",
+      "author": {
+        "name": "Ido Kraicer"
+      },
+      "homepage": "https://github.com/idokraicer/optimate-plugins",
+      "repository": "https://github.com/idokraicer/optimate-plugins",
+      "license": "MIT",
+      "keywords": ["gpt-5", "gpt-5.2", "gpt-5.4", "prompt-engineering", "openai", "ai-agents", "CTCO"],
+      "category": "prompt-engineering"
     }
   ]
 }
